@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <graphml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://graphml.graphdrawing.org/xmlns" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key attr.name="weight" attr.type="double" for="edge" id="d1"/>
-<key attr.name="state" attr.type="string" for="node" id="d0"/>
+<key attr.name="coords" attr.type="string" for="node" id="d0"/>
 <graph edgedefault="undirected"><node id="66">
   <data key="d0">0.2983232037035184 0.9677819206252297</data>
 </node>
