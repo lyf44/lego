@@ -95,13 +95,13 @@ def test(occ_grid, dense_G, sparse_G):
     INC = 0
     row = None
     col = None
-    start_n, goal_n = helper.get_valid_start_goal(dense_G, occ_grid, row, col, inc = INC)
-    start_pos = helper.state_to_numpy(dense_G.nodes[start_n]['coords'])
-    goal_pos = helper.state_to_numpy(dense_G.nodes[goal_n]['coords'])
+    path_nodes = []
+    while len(path_nodes) == 0:
+        start_n, goal_n = helper.get_valid_start_goal(dense_G, occ_grid, row, col, inc = INC)
+        start_pos = helper.state_to_numpy(dense_G.nodes[start_n]['coords'])
+        goal_pos = helper.state_to_numpy(dense_G.nodes[goal_n]['coords'])
+        path_nodes, dis = astar.astar(dense_G, start_n, goal_n, occ_grid, row, col, inc = INC)
 
-    path_nodes, dis = astar.astar(dense_G, start_n, goal_n, occ_grid, row, col, inc = INC)
-    if len(path_nodes) == 0:
-        return []
     bottleneck_nodes, curr_path_nodes = get_bottleneck_nodes(dense_G, sparse_G, path_nodes, occ_grid, dis, row, col, inc = INC)
     print("bottleneck_nodes = ", bottleneck_nodes)
     points_x = []
@@ -125,7 +125,7 @@ def test(occ_grid, dense_G, sparse_G):
         ss.append(s)
 
     # visualize_nodes(occ_grid,np.array(list(zip(points_x,points_y))), start_pos, goal_pos)
-    return ss
+    return start_pos, goal_pos, ss
 
 def main():
     INC = 0.03
