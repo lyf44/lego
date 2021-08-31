@@ -97,6 +97,15 @@ def get_valid_start_goal(dense_G, occ_g, row, col, inc):
     return start_n, goal_n
 
 def calc_weight_states(s1, s2):
-    config1 = state_to_numpy(s1)
-    config2 = state_to_numpy(s2)
+    if isinstance(s1, list):
+        config1 = np.array(s1)
+    else:
+        config1 = state_to_numpy(s1)
+    if isinstance(s2, list):
+        config2 = np.array(s2)
+    else:
+        config2 = state_to_numpy(s2)
+
+    # config1 = state_to_numpy(s1)
+    # config2 = state_to_numpy(s2)
     return math.sqrt(float(np.sum((config2-config1)**2)))
