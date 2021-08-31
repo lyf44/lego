@@ -137,6 +137,7 @@ def test2(maze, occ_grid, dense_G, sparse_G, start_n):
     points_x = []
     points_y = []
     ss = []
+    is_bottleneck = []
 
     # remove start and goal
     s1 = sparse_G.nodes[curr_path_nodes[0]]['coords']
@@ -157,7 +158,7 @@ def test2(maze, occ_grid, dense_G, sparse_G, start_n):
 
     if len(curr_path_nodes) == 0:
         # bottleneck_nodes.append(curr_path_nodes[1]) # append second node in curr_path
-        return goal_pos, ss
+        return goal_pos, ss, is_bottleneck
 
     # # handle the corner case where the start node is in the sparse graph and hence the first two nodes in path are the same
     # s1 = sparse_G.nodes[curr_path_nodes[0]]['coords']
@@ -183,17 +184,25 @@ def test2(maze, occ_grid, dense_G, sparse_G, start_n):
 
     # get bottleneck nodes
     bottleneck_nodes = [curr_path_nodes[0]]
-    print("path_nodes = ", path_nodes, bottleneck_nodes)
+    print("curr_path_nodes = ", curr_path_nodes, bottleneck_nodes)
     for node in bottleneck_nodes:
+        s = helper.state_to_numpy(sparse_G.nodes[node]['coords'])
+        # points_x.append(s[0])
+        # points_y.append(s[1])
+        ss.append(s)
         if 'p' in node:
-            s = helper.state_to_numpy(sparse_G.nodes[node]['coords'])
-            points_x.append(s[0])
-            points_y.append(s[1])
-            ss.append(s)
+            is_bottleneck.append(True)
+        else:
+            is_bottleneck.append(False)
+    # for node in bottleneck_nodes:
+    #     s = helper.state_to_numpy(sparse_G.nodes[node]['coords'])
+    #     points_x.append(s[0])
+    #     points_y.append(s[1])
+    #     ss.append(s)
 
-    print("final bottleneck nodes: {}".format(ss))
+    # print("final bottleneck nodes: {}".format(ss))
     # visualize_nodes(occ_grid, np.array(list(zip(points_x,points_y))), start_pos, goal_pos)
-    return goal_pos, ss
+    return goal_pos, ss, is_bottleneck
 
 def main():
     INC = 0.03
